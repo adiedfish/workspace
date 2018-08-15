@@ -15,6 +15,7 @@ test_data = np.array([])
 test_y = np.array([])
 n_test = 0
 
+save_path = "for_scp/"
 test_l = [0,4,8]
 train_l = [1,2,3,5,6,7,9]
 for i in train_l:
