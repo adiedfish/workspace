@@ -22,8 +22,10 @@ for i in train_l:
 	with open(save_path+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
 		if i == 0:
+			print(feature.shape()[1])
 			features = feature
 		else:
+			print(features.shape()[1],feature.shape()[1])
 			features = np.concatenate((features,feature),axis=0)
 	with open(save_path+"labels"+str(i),'rb') as f:
 		y_r = pkl.load(f)
