@@ -1,4 +1,8 @@
 #-*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import tensorflow as tf
 import numpy as np 
 import pickle as pkl 
@@ -17,7 +21,7 @@ n_test = 0
 
 save_path = "for_scp/"
 test_l = [0,4,8]
-train_l = [1,2,3,5,6,7,9]
+train_l = [1,2,3,5,6,7]
 for i in train_l:
 	with open(save_path+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
