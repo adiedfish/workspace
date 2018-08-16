@@ -73,7 +73,7 @@ for i in range(len(hidden_num)-1):
 	init_range.append(np.sqrt(6.0/(w_shape[i][0])+w_shape[i][1]))
 
 	b.append(tf.Variable(tf.zeros(b_shape[i],dtype=tf.float32)))
-	w.append(tf.Variable(tf.random_uniform(w_shape[i],minval=-init_range[i],maxval=init_range[i],dtype=float32)))
+	w.append(tf.Variable(tf.random_uniform(w_shape[i],minval=-init_range[i],maxval=init_range[i],dtype=tf.float32)))
 	zs.append(tf.matmul(zs[i],w[i]))
 	if i != len(hidden_num)-2:
 		activates.append(tf.nn.relu(zs[-1]+b[i]))
