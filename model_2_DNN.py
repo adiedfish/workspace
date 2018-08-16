@@ -7,6 +7,7 @@ import tensorflow as tf
 import numpy as np 
 import pickle as pkl 
 import csv
+import sys
 
 seed = 123
 tf.set_random_seed(seed)
@@ -89,8 +90,13 @@ sess.run(init)
 epochs = 100
 
 for i in range(epochs):
-	for i in range(len(mini_batches)):
-		sess.run(train_step,feed_dict={x:mini_batches[i],labels:mini_batches_y[i]})
+	for j in range(len(mini_batches)):
+		sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
+		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
+		predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
+		sys.stdout.write("Epochs {0}, {1}'s mini_batch:{2} / {3}".format(i,j,predict_right, n_test))
+		sys.stdout.write("\r")
+		sys.stdout.flush()
 	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
 	predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 	print("Epochs {0}:{1} / {2}".format(i, predict_right, n_test))
