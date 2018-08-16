@@ -20,9 +20,10 @@ test_data = np.array([])
 test_y = np.array([])
 n_test = 0
 
-save_path = "for_scp/"
+
 test_l = [0,4,8]
 train_l = [1,2,3,5,6,7]
+save_path = "sample/"
 for i in train_l:
 	with open(save_path+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
@@ -36,6 +37,7 @@ for i in train_l:
 			y = y_r
 		else:
 			y = np.concatenate((y,y_r),axis=0)
+save_path = "for_scp/"
 for i in test_l:
 	with open(save_path+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
@@ -94,17 +96,21 @@ epochs = 100
 for i in range(epochs):
 	for j in range(len(mini_batches)):
 		sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
-
+		
 		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
+		predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 		predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
-		sys.stdout.write("Epochs {0}, {1}'s mini_batch:{2} / {3}".format(i,j,predict_right, n_test))
+		predict_right_2 = sess.run(predict_right_tf_2,feed_dict={x:test_data,labels:test_y})
+		sys.stdout.write("Epochs {0}, {1}'s mini_batch:{2} / {3}, how much we predict right: {4}".format(i, j, predict_right_2, n_test, predict_right))
 		sys.stdout.write("\r")
 		sys.stdout.flush()
 
 
 	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
+	predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 	predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
-	print("Epochs {0}:{1} / {2}".format(i, predict_right, n_test))
+	predict_right_2 = sess.run(predict_right_tf_2,feed_dict={x:test_data,labels:test_y})
+	print("\nEpochs {0}:{1} / {2}. how much we predict right: {3}".format(i, predict_right, n_test, predict_right))
 
 
 
