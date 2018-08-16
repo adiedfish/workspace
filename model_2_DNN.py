@@ -69,7 +69,7 @@ zx = [x]
 
 for i in range(len(hidden_num)-1):
 	b_shape.append(hidden_num[i+1])
-	w_shape.append(hidden_num[i],hidden_num[i+1])
+	w_shape.append((hidden_num[i],hidden_num[i+1]))
 	init_range.append(np.sqrt(6.0/(w_shape[i][0])+w_shape[i][1]))
 
 	b.append(tf.Variable(tf.zeros(b_shape[i],dtype=tf.float32)))
