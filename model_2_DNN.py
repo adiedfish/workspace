@@ -49,16 +49,17 @@ for i in test_l:
 			test_y = y_r
 		else:
 			test_y = np.concatenate((test_y,y_r),axis=0)
+n_test = len(test_y)
 
 x = tf.placeholder(tf.float32)
 labels = tf.placeholder(tf.float32)
 
 mini_batch_size = 10000
-mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features))]
-mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features))]
+mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
+mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 
 learning_rate = 0.01
-hidden_num = [features.shape[1],1000,100,10,2]
+hidden_num = [features.shape[1],100,10,2]
 
 b_shape = []
 w_shape = []
