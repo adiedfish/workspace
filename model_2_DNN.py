@@ -27,7 +27,7 @@ for i in train_l:
 			features = np.concatenate((features,feature),axis=0)
 	with open(save_path+"labels"+str(i),'rb') as f:
 		y_r = pkl.load(f)
-		if i == 0:
+		if i == train_l[0]:
 			y = y_r
 		else:
 			y = np.concatenate((y,y_r),axis=0)
@@ -40,7 +40,7 @@ for i in test_l:
 			test_data = np.concatenate((test_data,feature),axis=0)
 	with open(save_path+"labels"+str(i),'rb') as f:
 		y_r = pkl.load(f)
-		if i == 0:
+		if i == test_l[0]:
 			test_y = y_r
 		else:
 			test_y = np.concatenate((test_y,y_r),axis=0)
