@@ -57,7 +57,7 @@ n_test = 2141
 x = tf.placeholder(tf.float32)
 labels = tf.placeholder(tf.float32)
 
-mini_batch_size = 1000
+mini_batch_size = 3000
 mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 
@@ -110,7 +110,7 @@ for i in range(epochs):
 	predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 	predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 	predict_right_2 = sess.run(predict_right_tf_2,feed_dict={x:test_data,labels:test_y})
-	print("\nEpochs {0}:{1} / {2}. how much we predict right: {3}".format(i, predict_right, n_test, predict_right))
+	print("\nEpochs {0}:{1} / {2}. how much we predict right: {3}".format(i, predict_right_2, n_test, predict_right))
 
 
 
