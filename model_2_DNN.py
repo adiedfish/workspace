@@ -23,7 +23,7 @@ n_test = 0
 
 test_l = [0,4,8]
 train_l = [1,2,3,5,6,7]
-save_path = "sample/"
+save_path = "sample/sampled_"
 for i in train_l:
 	with open(save_path+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
@@ -57,7 +57,7 @@ n_test = 2141
 x = tf.placeholder(tf.float32)
 labels = tf.placeholder(tf.float32)
 
-mini_batch_size = 10000
+mini_batch_size = 1000
 mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 
@@ -97,7 +97,7 @@ for i in range(epochs):
 	for j in range(len(mini_batches)):
 		sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
 		
-		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
+		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
 		predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 		predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 		predict_right_2 = sess.run(predict_right_tf_2,feed_dict={x:test_data,labels:test_y})
@@ -106,7 +106,7 @@ for i in range(epochs):
 		sys.stdout.flush()
 
 
-	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
+	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
 	predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 	predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 	predict_right_2 = sess.run(predict_right_tf_2,feed_dict={x:test_data,labels:test_y})
