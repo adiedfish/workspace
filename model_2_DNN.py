@@ -54,6 +54,7 @@ labels = tf.placeholder(tf.float32)
 
 mini_batch_size = 10000
 mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features))]
+mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features))]
 
 learning_rate = 0.01
 hidden_num = [features.shape[1],1000,100,10,2]
@@ -65,7 +66,7 @@ init_range = []
 w = [] 
 b = []
 activates = []
-zx = [x]
+zs = [x]
 
 for i in range(len(hidden_num)-1):
 	b_shape.append(hidden_num[i+1])
@@ -88,8 +89,8 @@ sess.run(init)
 epochs = 100
 
 for i in range(epochs):
-	for mini_batch in mini_batches:
-		sess.run(train_step,feed_dict={x:mini_batch,labels:y})
+	for i in range(len(mini_batches)):
+		sess.run(train_step,feed_dict={x:mini_batches[i],labels:mini_batches_y[i]})
 	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
 	predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 	print("Epochs {0}:{1} / {2}".format(i, predict_right, n_test))
