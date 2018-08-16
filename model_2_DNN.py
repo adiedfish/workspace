@@ -49,7 +49,8 @@ for i in test_l:
 			test_y = y_r
 		else:
 			test_y = np.concatenate((test_y,y_r),axis=0)
-n_test = len(test_y)
+#n_test = len(test_y)
+n_test = 2141
 
 x = tf.placeholder(tf.float32)
 labels = tf.placeholder(tf.float32)
@@ -93,12 +94,15 @@ epochs = 100
 for i in range(epochs):
 	for j in range(len(mini_batches)):
 		sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
-		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
+
+		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 		predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 		sys.stdout.write("Epochs {0}, {1}'s mini_batch:{2} / {3}".format(i,j,predict_right, n_test))
 		sys.stdout.write("\r")
 		sys.stdout.flush()
-	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
+
+
+	predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 	predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
 	print("Epochs {0}:{1} / {2}".format(i, predict_right, n_test))
 
