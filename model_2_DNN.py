@@ -23,7 +23,7 @@ n_test = 0
 
 test_l = [0,4,8]
 train_l = [1,2,3,5,6,7]
-save_path = "sample/sampled_"
+save_path = "sample_2/sampled_"
 for i in train_l:
 	with open(save_path+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
@@ -39,7 +39,7 @@ for i in train_l:
 			y = np.concatenate((y,y_r),axis=0)
 save_path = "for_scp/"
 for i in test_l:
-	with open(save_path+"features"+str(i),'rb') as f:
+	with open("for_scp_2"+"features"+str(i),'rb') as f:
 		feature = pkl.load(f)
 		if i == test_l[0]:
 			test_data = feature
@@ -91,7 +91,7 @@ train_step = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 init = tf.initialize_all_variables()
 sess = tf.Session()
 sess.run(init)
-epochs = 100
+epochs = 30
 
 for i in range(epochs):
 	for j in range(len(mini_batches)):
